@@ -1,0 +1,63 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="index.html">LMS</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav" id="navLinks">
+            <li class="nav-item">
+                <a class="nav-link" href="login.html">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="signup.html">Sign Up</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="dashboard.html">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="courses.html">Courses</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="assignments.html">Assignments</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="quiz.html">Quizzes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="profile.html">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin.html">Admin Panel</a>
+            </li>
+        </ul>
+        <button id="toggleDarkMode" class="btn btn-outline-secondary ms-auto">Toggle Dark Mode</button>
+        <button id="logoutButton" class="btn btn-danger ms-2" style="display: none;">Logout</button>
+    </div>
+</nav>
+
+<script>
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    const navLinks = document.getElementById('navLinks');
+    const logoutButton = document.getElementById('logoutButton');
+
+    if (user) {
+        // Show logout button and hide login/signup links
+        logoutButton.style.display = 'block';
+        navLinks.querySelectorAll('li').forEach(link => {
+            if (link.firstChild.textContent === "Login" || link.firstChild.textContent === "Sign Up") {
+                link.style.display = 'none';
+            }
+        });
+
+        logoutButton.addEventListener('click', () => {
+            localStorage.removeItem('user'); // Remove user data from local storage
+            window.location.href = 'login.html'; // Redirect to login page
+        });
+    } else {
+        // Disable nav links if user is not logged in
+        navLinks.querySelectorAll('li:not(:nth-child(-n+2))').forEach(link => {
+            link.style.display = 'none';
+        });
+    }
+</script>

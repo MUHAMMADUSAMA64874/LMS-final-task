@@ -1,0 +1,28 @@
+[
+    {
+      "title": "PF",
+      "description": "Programming Fundamentals",
+      "videoLink": "https://www.youtube.com/embed/zOjov-2OZ0E?si=kCnyu5CngOryvC7h"
+    },
+    {
+      "title": "DS",
+      "description": "Data Structures",
+      "videoLink": "#"
+    },
+    {
+      "title": "DBMS",
+      "description": "Database Management Systems",
+      "videoLink": "#"
+    },
+    {
+      "title": "OS",
+      "description": "Operating Systems",
+      "videoLink": "#"
+    },
+    {
+      "title": "AI",
+      "description": "Artificial Intelligence",
+      "videoLink": "#"
+    }
+  ]
+  

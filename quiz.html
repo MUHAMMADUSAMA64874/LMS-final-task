@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - Quiz</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <div class="container">
+        <h1>Take Quiz</h1>
+        <div id="quizList"></div>
+        <div id="quiz-container"></div>
+    </div>
+
+    <div id="footer"></div>
+
+    <script>
+        // Fetch the header and footer
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header').innerHTML = data;
+
+                const toggleButton = document.getElementById('toggleDarkMode');
+                if (toggleButton) {
+                    toggleButton.addEventListener('click', () => {
+                        document.body.classList.toggle('dark-mode');
+                        const navbar = document.querySelector('.navbar');
+                        if (document.body.classList.contains('dark-mode')) {
+                            navbar.classList.remove('navbar-light', 'bg-light');
+                            navbar.classList.add('navbar-dark');
+                        } else {
+                            navbar.classList.remove('navbar-dark');
+                            navbar.classList.add('navbar-light', 'bg-light');
+                        }
+
+                        const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+                        localStorage.setItem('theme', theme);
+                    });
+                }
+
+                const theme = localStorage.getItem('theme');
+                if (theme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    const navbar = document.querySelector('.navbar');
+                    navbar.classList.remove('navbar-light', 'bg-light');
+                    navbar.classList.add('navbar-dark');
+                }
+            });
+
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer').innerHTML = data;
+            });
+
+        const takeQuiz = (quizTitle) => {
+            alert(`Starting quiz: ${quizTitle}`);
+
+            fetch('/api/quizzes')
+                .then(response => response.json())
+                .then(quizzes => {
+                    const quiz = quizzes.find(q => q.title === quizTitle);
+                    if (quiz) {
+                        displayQuiz(quiz);
+                    } else {
+                        alert('Quiz not found.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching quiz data:', error);
+                    alert('Failed to load quiz.');
+                });
+        };
+
+        const displayQuiz = (quiz) => {
+            const quizContainer = document.createElement('div');
+            quizContainer.className = 'quiz-container';
+
+            const titleElement = document.createElement('h2');
+            titleElement.textContent = quiz.title;
+            quizContainer.appendChild(titleElement);
+
+            quiz.questions.forEach((question, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question';
+
+                const questionText = document.createElement('p');
+                questionText.textContent = `${index + 1}. ${question.question}`;
+                questionElement.appendChild(questionText);
+
+                question.options.forEach(option => {
+                    const optionLabel = document.createElement('label');
+                    const optionInput = document.createElement('input');
+                    optionInput.type = 'radio';
+                    optionInput.name = `question${index}`;
+                    optionInput.value = option;
+
+                    optionLabel.appendChild(optionInput);
+                    optionLabel.appendChild(document.createTextNode(option));
+                    questionElement.appendChild(optionLabel);
+                });
+
+                quizContainer.appendChild(questionElement);
+            });
+
+            const submitButton = document.createElement('button');
+            submitButton.textContent = 'Submit';
+            submitButton.onclick = () => {
+                alert('Quiz submitted!');
+            };
+            quizContainer.appendChild(submitButton);
+
+            document.getElementById('quiz-container').innerHTML = ''; // Clear previous quiz
+            document.getElementById('quiz-container').appendChild(quizContainer);
+        };
+
+        const loadQuizzes = async () => {
+            const response = await fetch('/api/quizzes');
+            const quizzes = await response.json();
+            const quizListDiv = document.getElementById('quizList');
+            quizzes.forEach(quiz => {
+                const quizElement = document.createElement('div');
+                quizElement.className = 'card mb-3';
+                quizElement.innerHTML = `
+                    <div class="card-body">
+                        <h5 class="card-title">${quiz.title}</h5>
+                        <button class="btn btn-primary" onclick="takeQuiz('${quiz.title}')">Take Quiz</button>
+                    </div>
+                `;
+                quizListDiv.appendChild(quizElement);
+            });
+        };
+
+        loadQuizzes();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+[
+  {
+    "username": "usama",
+    "password": "$2b$10$aEc2xQoWLQFnN4yMw4Ryfuv0HY5obynt6qBPyp2I8RFZBkLxw9qf6",
+    "firstName": "Muhammad",
+    "lastName": "Usama",
+    "email": "usama@example.com",
+    "phone": "123456789",
+    "bio": "Learning enthusiast.",
+    "profilePicture": "uploads\\20c1c4ba760357bf5d6918848e75690d"
+  }
+]

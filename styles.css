@@ -1,0 +1,85 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.footer {
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-container {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.question {
+    margin-bottom: 15px;
+}
+
+button {
+    margin-top: 10px;
+}
+
+
+.footer {
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    flex: 1;
+}
+
+body.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+.navbar {
+    transition: background-color 0.3s;
+}
+
+.navbar-light.bg-light {
+    background-color: #f8f9fa !important;
+}
+
+.navbar-dark {
+    background-color: #1e1e1e !important;
+}
+
+h5.card-title {
+    color: black;
+}
+
+.text-center {
+    text-align: center !important;
+    color: black;
+}
+p {
+    color: black;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
